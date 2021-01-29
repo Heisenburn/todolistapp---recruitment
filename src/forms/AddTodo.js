@@ -1,11 +1,11 @@
 const addTodoToServer = (elementToBeSend) => {
 
     const customFormData = new FormData();
-    customFormData.append('task', 'tresc taska');
+    customFormData.append('task', elementToBeSend.value);
     customFormData.append('is_completed', 0);
     customFormData.append('id', '');
     
-    fetch('https://react.massivepixel.io/api/rudnik.marcin/1', {
+    fetch(`https://react.massivepixel.io/api/rudnik.marcin/${elementToBeSend.id}`, {
         method: 'POST',
         body: customFormData,
     })
@@ -26,18 +26,18 @@ const AddTodo = ({
 
         if (controlledInputValues.addNewTodoInputValue.length >= 1) {
             //validating form
-
+            
+            let tempAddObject = {
+                id: todos.length,
+                value: controlledInputValues.addNewTodoInputValue,
+                isCompleted: 0,
+            }
             setTodos([
-                ...todos,
-                {
-                    id: todos.length,
-                    value: controlledInputValues.addNewTodoInputValue,
-                    isCompleted: false,
-                },
+                ...todos,tempAddObject,
             ]);
 
             setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
-            addTodoToServer(todos);
+            addTodoToServer(tempAddObject);
         }
     };
 

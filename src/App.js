@@ -45,7 +45,7 @@ function App() {
     };
 
     const ToggleFinishedTask = () => {
-        if (todos.find((item) => item.isCompleted === true) !== undefined & todoInspectModeState === false) {
+        if (todos.find((item) => item.isCompleted === 1) !== undefined & todoInspectModeState === false) {
              
             return (
                 <button onClick={() => setShowCompletedMode(!showCompletedMode)}>
@@ -61,13 +61,13 @@ function App() {
                 <ul>
                     {todos.map(
                         (item, index) =>
-                            item.isCompleted === false && (
+                            item.isCompleted === 0 && (
                                 <StyledTodoElement
                                     key={index}
                                     onClick={() => handleTodoElementClick(index)}
                                 >
                                     <p key={index + 1}>{item.value}</p>
-                                    <CheckedSVG key={index + 2} isCompleted={item.isCompleted} />
+                                
                                 </StyledTodoElement>
                             ),
                     )}
@@ -123,7 +123,7 @@ const StyledTodoElement = styled.li`
 `;
 
 const CheckedSVG = ({ isCompleted }) => {
-    if (isCompleted) {
+    if (isCompleted===1) {
         return (
             <svg
                 xmlns="http://www.w3.org/2000/svg"
