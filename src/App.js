@@ -2,19 +2,28 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
+import AddTodo from './forms/AddTodo';
+import EditTodo from './forms/EditTodo';
 
-const StyledLiElement = styled.li`
+const StyledTodoElement = styled.li`
     display: flex;
+    border: 1px solid black;
     p {
         margin: 0;
     }
 `;
 
 function App() {
-    const [newTodoInput, setNewTodoInput] = useState('');
-    const [todos, setTodos] = useState([]);
+    const [addNewTodoInputValue, setAddNewTodoInputValue] = useState(''); //TODO: Controlled input zrobić jako jeden obiekt
 
-    const inputRef = useRef();
+    const [editTodoInputValue, setEditTodoInputValue] = useState('');
+
+    const [todos, setTodos] = useState([]);
+    const [todoInspectModeState, setTodoInspectModeState] = useState(false);
+
+    const [elementCurrentlyBeingEdited, setElementCurrentlyBeingEdited] = useState(null);
+
+    
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -23,70 +32,32 @@ function App() {
         setTodos([
             ...todos,
             {
-                id: todos.length + 1,
-                name: newTodoInput,
+                id: todos.length,
+                value: addNewTodoInputValue,
                 isCompleted: false,
             },
         ]);
 
-        setNewTodoInput('');
+        setAddNewTodoInputValue('');
     };
 
-    const handleNewTodoChange = (event) => {
-        setNewTodoInput(event.target.value);
+  
+
+    const handleTodoElementClick = (index) => {
+        setTodoInspectModeState(true);
+
+        setEditTodoInputValue(todos[index].value);
+        setElementCurrentlyBeingEdited(index);
     };
 
-    // const AddTodo = () => {
-    //     return (
-
-    //     );
-    // };
-
-    const handleEditTodo = (e, index) => {
-        console.log('test');
-    };
-
-    const handleCheckBox = (index) => {
-        let tempArray = [...todos];
-
-        tempArray[index - 1].isCompleted = !tempArray[index - 1].isCompleted; //changing to opposite value
-
-        setTodos(tempArray);
-    };
-
-    const handleDeleteTodo = (index) => {
-        let filteredArray = todos.filter((item) => item.id !== index);
-        filteredArray = filteredArray.map((item) => {
-            return {
-                id: item.id !== 1 ? item.id - 1 : 1, //decreasing id for each element when deleting
-                name: item.name,
-                isCompleted: item.isCompleted,
-            };
-        });
-
-        setTodos(filteredArray);
-    };
     const TodoList = () => {
         return (
             <ul>
                 {todos.map((item, index) => (
-                
-                      
-                        <StyledLiElement key={index}>
-                            <p key={index+1}>{item.name}</p>
-                            <input
-                               key={index+2}
-                                type="checkbox"
-                                onClick={() => handleCheckBox(index + 1)}
-                                defaultChecked={item.isCompleted}
-                            ></input>
-                            <button key={index+3}  onClick={() => handleDeleteTodo(index + 1)}>
-                                X
-                            </button>
-                        </StyledLiElement>
-
+                    <StyledTodoElement key={index} onClick={() => handleTodoElementClick(index)}>
+                        <p key={index+1}>{item.value}</p>
                         
-                  
+                    </StyledTodoElement>
                 ))}
             </ul>
         );
@@ -94,17 +65,22 @@ function App() {
 
     return (
         <>
-            <form onSubmit={handleFormSubmit}>
-                <label htmlFor="addNewTodoInput">Add new element</label>
-                <input
-                    ref={inputRef}
-                    id="addNewTodoInput"
-                    value={newTodoInput}
-                    onChange={handleNewTodoChange}
-                ></input>
-                <input type="submit" value="Add todo"></input>
-            </form>
-
+            <AddTodo
+                todoInspectModeState={todoInspectModeState}
+                onHandleFormSubmit={handleFormSubmit}
+                addNewTodoInputValue={addNewTodoInputValue}
+                setAddNewTodoInputValue={setAddNewTodoInputValue}
+                
+            />
+            <EditTodo //TODO: tutaj zdecydowanie za dużo elementów przekazuje
+                todos={todos}
+                setTodos={setTodos}
+                elementCurrentlyBeingEdited={elementCurrentlyBeingEdited}
+                editTodoInputValue={editTodoInputValue}
+                setEditTodoInputValue={setEditTodoInputValue}
+                setTodoInspectModeState={setTodoInspectModeState}
+                todoInspectModeState={todoInspectModeState}
+            />
             <TodoList />
         </>
     );
