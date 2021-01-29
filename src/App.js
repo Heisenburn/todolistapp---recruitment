@@ -42,7 +42,7 @@ function App() {
     });
 
     const [todos, setTodos] = useState([]);
-    
+
     const [showCompletedMode, setShowCompletedMode] = useState(false);
     const [todoInspectModeState, setTodoInspectModeState] = useState(false);
 
@@ -59,39 +59,49 @@ function App() {
         setElementCurrentlyBeingEdited(index);
     };
 
-    const ShowTodoList = ({isCompletedVisible}) => {
-
-        if(isCompletedVisible===false){
-
+    const ToggleFinishedTask = () => {
+        if (todos.find(item=>item.isCompleted === true)) { //TODO: sprawdzenie czy istnieje jakikolwiek checked
+            return (
+                <button onClick={() => setShowCompletedMode(!showCompletedMode)}>
+                    See finished tasks
+                </button>
+            );
+        }
+        return null;
+    };
+    const ShowTodoList = ({ isCompletedVisible }) => {
+        if (isCompletedVisible === false) {
             return (
                 <ul>
-                    {todos.map((item, index) => (
-                        item.isCompleted===false &&
-                        <StyledTodoElement key={index} onClick={() => handleTodoElementClick(index)}>
-                            <p key={index + 1}>{item.value}</p>
-                            <CheckedSVG key={index+2} isCompleted={item.isCompleted} />
-                        </StyledTodoElement>
-                    ))}
+                    {todos.map(
+                        (item, index) =>
+                            item.isCompleted === false && (
+                                <StyledTodoElement
+                                    key={index}
+                                    onClick={() => handleTodoElementClick(index)}
+                                >
+                                    <p key={index + 1}>{item.value}</p>
+                                    <CheckedSVG key={index + 2} isCompleted={item.isCompleted} />
+                                </StyledTodoElement>
+                            ),
+                    )}
                 </ul>
             );
         }
         return (
             <ul>
-            {todos.map((item, index) => (
-                 
-                <StyledTodoElement key={index} onClick={() => handleTodoElementClick(index)}>
-                    <p key={index + 1}>{item.value}</p>
-                    <CheckedSVG key={index+2} isCompleted={item.isCompleted} />
-                </StyledTodoElement>
-            ))}
-        </ul>
-        )
-      
+                {todos.map((item, index) => (
+                    <StyledTodoElement key={index} onClick={() => handleTodoElementClick(index)}>
+                        <p key={index + 1}>{item.value}</p>
+                        <CheckedSVG key={index + 2} isCompleted={item.isCompleted} />
+                    </StyledTodoElement>
+                ))}
+            </ul>
+        );
     };
 
     return (
         <>
-      
             <AddTodo
                 todoInspectModeState={todoInspectModeState}
                 controlledInputValues={controlledInputValues}
@@ -99,7 +109,7 @@ function App() {
                 setTodos={setTodos}
                 todos={todos}
             />
-              <button onClick={()=> setShowCompletedMode(!showCompletedMode)}>See finished tasks</button>
+            <ToggleFinishedTask />
             <EditTodo
                 todos={todos}
                 setTodos={setTodos}
@@ -110,7 +120,6 @@ function App() {
                 todoInspectModeState={todoInspectModeState}
             />
             <ShowTodoList isCompletedVisible={showCompletedMode} />
-            
         </>
     );
 }
