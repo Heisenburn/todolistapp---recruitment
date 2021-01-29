@@ -44,11 +44,13 @@ const TodoInspectMode = ({
     const handleEditSubmitForm = (event) => {
         event.preventDefault();
 
-        //TODO: walidacja
+        if (controlledInputValues.editTodoInputValue.length >= 1) {
+            //validating form
 
-        handleEditTodo(controlledInputValues.editTodoInputValue);
-        setControlledInputValues({ ...controlledInputValues, editTodoInputValue: '' });
-        setTodoInspectModeState(false);
+            handleEditTodo(controlledInputValues.editTodoInputValue);
+            setControlledInputValues({ ...controlledInputValues, editTodoInputValue: '' });
+            setTodoInspectModeState(false);
+        }
     };
 
     if (todoInspectModeState === true) {
