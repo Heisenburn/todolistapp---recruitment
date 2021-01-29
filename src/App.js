@@ -14,16 +14,15 @@ const StyledTodoElement = styled.li`
 `;
 
 function App() {
-    const [addNewTodoInputValue, setAddNewTodoInputValue] = useState(''); //TODO: Controlled input zrobić jako jeden obiekt
-
-    const [editTodoInputValue, setEditTodoInputValue] = useState('');
+    const [controlledInputValues, setControlledInputValues] = useState({
+        addNewTodoInputValue: '',
+        editTodoInputValue: '',
+    });
 
     const [todos, setTodos] = useState([]);
     const [todoInspectModeState, setTodoInspectModeState] = useState(false);
 
     const [elementCurrentlyBeingEdited, setElementCurrentlyBeingEdited] = useState(null);
-
-    
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -33,20 +32,22 @@ function App() {
             ...todos,
             {
                 id: todos.length,
-                value: addNewTodoInputValue,
+                value: controlledInputValues.addNewTodoInputValue,
                 isCompleted: false,
             },
         ]);
 
-        setAddNewTodoInputValue('');
+        setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
     };
-
-  
 
     const handleTodoElementClick = (index) => {
         setTodoInspectModeState(true);
 
-        setEditTodoInputValue(todos[index].value);
+        setControlledInputValues({
+            ...controlledInputValues,
+            editTodoInputValue: todos[index].value,
+        });
+
         setElementCurrentlyBeingEdited(index);
     };
 
@@ -55,8 +56,7 @@ function App() {
             <ul>
                 {todos.map((item, index) => (
                     <StyledTodoElement key={index} onClick={() => handleTodoElementClick(index)}>
-                        <p key={index+1}>{item.value}</p>
-                        
+                        <p key={index + 1}>{item.value}</p>
                     </StyledTodoElement>
                 ))}
             </ul>
@@ -68,16 +68,15 @@ function App() {
             <AddTodo
                 todoInspectModeState={todoInspectModeState}
                 onHandleFormSubmit={handleFormSubmit}
-                addNewTodoInputValue={addNewTodoInputValue}
-                setAddNewTodoInputValue={setAddNewTodoInputValue}
-                
+                controlledInputValues={controlledInputValues}
+                setControlledInputValues={setControlledInputValues}
             />
             <EditTodo //TODO: tutaj zdecydowanie za dużo elementów przekazuje
                 todos={todos}
                 setTodos={setTodos}
                 elementCurrentlyBeingEdited={elementCurrentlyBeingEdited}
-                editTodoInputValue={editTodoInputValue}
-                setEditTodoInputValue={setEditTodoInputValue}
+                controlledInputValues={controlledInputValues}
+                setControlledInputValues={setControlledInputValues}
                 setTodoInspectModeState={setTodoInspectModeState}
                 todoInspectModeState={todoInspectModeState}
             />

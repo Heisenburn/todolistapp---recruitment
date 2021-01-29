@@ -1,8 +1,10 @@
+
+
 const AddTodo = ({
     todoInspectModeState,
     onHandleFormSubmit,
-    addNewTodoInputValue,
-    setAddNewTodoInputValue,
+    controlledInputValues,
+    setControlledInputValues,
 }) => {
     if (todoInspectModeState === false) {
         return (
@@ -10,8 +12,8 @@ const AddTodo = ({
                 <label htmlFor="addNewTodoInput">Add new element</label>
                 <input
                     id="addNewTodoInput"
-                    value={addNewTodoInputValue}
-                    onChange={(event) => setAddNewTodoInputValue(event.target.value)}
+                    value={controlledInputValues.addNewTodoInputValue}
+                    onChange={(event) => setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: event.target.value })}
                 ></input>
                 <input type="submit" value="Add todo"></input>
             </form>

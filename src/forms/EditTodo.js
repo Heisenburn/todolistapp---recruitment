@@ -2,8 +2,8 @@ const TodoInspectMode = ({
     todos,
     setTodos,
     elementCurrentlyBeingEdited,
-    editTodoInputValue,
-    setEditTodoInputValue,
+    controlledInputValues,
+    setControlledInputValues,
     setTodoInspectModeState,
     todoInspectModeState,
 }) => {
@@ -22,27 +22,23 @@ const TodoInspectMode = ({
             .isCompleted; //changing to opposite value
 
         setTodos(tempArray);
+        setTodoInspectModeState(false);
     };
 
-    const handleDeleteTodo = () => {
-         
-      
+    const handleDeleteTodo = (event) => {
+        event.preventDefault();
         let filteredArray = todos.filter((item) => item.id !== elementCurrentlyBeingEdited);
-     
-       
 
         filteredArray = filteredArray.map((item, index) => {
-         
             return {
-                id: index,  
+                id: index,
                 value: item.value,
                 isCompleted: item.isCompleted,
             };
         });
 
-        
-
         setTodos(filteredArray);
+        setTodoInspectModeState(false);
     };
 
     const handleEditSubmitForm = (event) => {
@@ -50,8 +46,8 @@ const TodoInspectMode = ({
 
         //TODO: walidacja
 
-        handleEditTodo(editTodoInputValue);
-        setEditTodoInputValue('');
+        handleEditTodo(controlledInputValues.editTodoInputValue);
+        setControlledInputValues({ ...controlledInputValues, editTodoInputValue: '' });
         setTodoInspectModeState(false);
     };
 
@@ -61,16 +57,22 @@ const TodoInspectMode = ({
                 <label htmlFor="editTodoInput">Edit element</label>
                 <input
                     id="editTodoInput"
-                    value={editTodoInputValue}
-                    onChange={(event) => setEditTodoInputValue(event.target.value)}
+                    value={controlledInputValues.editTodoInputValue}
+                    onChange={(event) =>
+                        setControlledInputValues({
+                            ...controlledInputValues,
+                            editTodoInputValue: event.target.value,
+                        })
+                    }
                 ></input>
                 <input
                     type="checkbox"
                     onClick={() => handleClickCheckbox(elementCurrentlyBeingEdited)}
                     defaultChecked={todos[elementCurrentlyBeingEdited].isCompleted}
                 ></input>
-                <button onClick={handleDeleteTodo}>X</button>
+
                 <input type="submit" value="submit edit"></input>
+                <button onClick={handleDeleteTodo}>delete</button>
             </form>
         );
     }
