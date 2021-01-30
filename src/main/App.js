@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
-import AddTodo from '../forms/AddTodo/AddTodo';
-import EditTodo from '../forms/EditTodo/EditTodo';
+import AddTodo from '../components/AddTodo/AddTodo';
+import EditTodo from '../components/EditTodo/EditTodo';
+import ShowTodoList from '../components/ShowTodoList/ShowTodoList';
 import { StyledContainer } from '../styles/styled';
 // import './styles/globalStyles.css';
 import { makeFetchRequest } from '../apiFunctions/get';
 import ReactLoading from 'react-loading';
-import ToggleFinishedTasks from './ToggleFinishedTasks';
-import ShowTodoList from './ShowTodoList';
 
 function App() {
     const [todos, setTodos] = useState([]);
-    const [showCompletedMode, setShowCompletedMode] = useState(false);
-    const [todoInspectModeState, setTodoInspectModeState] = useState(false);
+    const [showCompletedMode, setShowCompletedMode] = useState(true);
+    const [editMode, setEditMode] = useState(false);
     const [elementCurrentlyBeingEdited, setElementCurrentlyBeingEdited] = useState(null);
     const [controlledInputValues, setControlledInputValues] = useState({
         addNewTodoInputValue: '',
@@ -56,31 +55,31 @@ function App() {
         <StyledContainer>
             <Loading />
             <AddTodo
-                todoInspectModeState={todoInspectModeState}
+                editMode={editMode}
                 controlledInputValues={controlledInputValues}
                 setControlledInputValues={setControlledInputValues}
                 setTodos={setTodos}
                 todos={todos}
                 isCommunicatingWithServer={isCommunicatingWithServer}
             />
-           
             <EditTodo
                 todos={todos}
                 setTodos={setTodos}
                 elementCurrentlyBeingEdited={elementCurrentlyBeingEdited}
                 controlledInputValues={controlledInputValues}
                 setControlledInputValues={setControlledInputValues}
-                setTodoInspectModeState={setTodoInspectModeState}
-                todoInspectModeState={todoInspectModeState}
+                setEditMode={setEditMode}
+                editMode={editMode}
             />
             <ShowTodoList
-                isCompletedVisible={showCompletedMode}
-                todoInspectModeState={todoInspectModeState}
-                setTodoInspectModeState={setTodoInspectModeState}
+                showCompletedMode={showCompletedMode}
+                editMode={editMode}
+                setEditMode={setEditMode}
                 setControlledInputValues={setControlledInputValues}
                 setElementCurrentlyBeingEdited={setElementCurrentlyBeingEdited}
                 todos={todos}
                 controlledInputValues={controlledInputValues}
+                setShowCompletedMode={setShowCompletedMode}
             />
         </StyledContainer>
     );

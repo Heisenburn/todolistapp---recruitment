@@ -14,7 +14,7 @@ export const sendToServer = (task,is_completed=0, id='') => {
         .catch((error) => console.log('Error:: ' + error.message));
 };
 
-
+//TODO: DRY
  
 
 export const updateTodoOnServer = (task,id, is_completed=0) => {
@@ -38,7 +38,7 @@ export const updateTodoOnServer = (task,id, is_completed=0) => {
 export const deleteOnServer = (id) => {
 
      
-   const test = fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
+   const fetchResponse = fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
         method: 'DELETE',
      
     })
@@ -49,5 +49,7 @@ export const deleteOnServer = (id) => {
         })
         .catch((error) => console.log('Error:: ' + error.message));
 
-        return test;
+        return fetchResponse;
 };
+
+ 

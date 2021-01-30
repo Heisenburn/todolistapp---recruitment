@@ -2,7 +2,7 @@ import {sendToServer} from '../../apiFunctions/send';
 import { v4 as uuidv4 } from 'uuid';
 
 const AddTodo = ({
-    todoInspectModeState,
+    editMode,
     setTodos,
     todos,
     controlledInputValues,
@@ -30,7 +30,7 @@ const AddTodo = ({
         }
     };
 
-    if (todoInspectModeState === false && isCommunicatingWithServer === false) {
+    if (editMode === false && isCommunicatingWithServer === false) {
         return (
             <form onSubmit={handleAddTodo}>
                 <label htmlFor="addNewTodoInput">Add new element</label>

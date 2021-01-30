@@ -7,8 +7,8 @@ const EditTodo = ({
     elementCurrentlyBeingEdited,
     controlledInputValues,
     setControlledInputValues,
-    setTodoInspectModeState,
-    todoInspectModeState,
+    setEditMode,
+    editMode,
 }) => {
     const handleEditTodo = (newValue) => {
         if (newValue !== todos[elementCurrentlyBeingEdited].task) {
@@ -42,7 +42,7 @@ const EditTodo = ({
         }
 
         setTodos(tempArray);
-        setTodoInspectModeState(false);
+        setEditMode(false);
     };
 
     const handleDeleteTodo = (event) => {
@@ -62,7 +62,7 @@ const EditTodo = ({
         });
 
         setTodos(filteredArray);
-        setTodoInspectModeState(false);
+        setEditMode(false);
     };
 
     const handleEditSubmitForm = (event) => {
@@ -73,11 +73,11 @@ const EditTodo = ({
 
             handleEditTodo(controlledInputValues.editTodoInputValue);
             setControlledInputValues({ ...controlledInputValues, editTodoInputValue: '' });
-            setTodoInspectModeState(false);
+            setEditMode(false);
         }
     };
 
-    if (todoInspectModeState === true) {
+    if (editMode === true) {
         return (
             <>
                 <form onSubmit={handleEditSubmitForm}>
@@ -101,7 +101,7 @@ const EditTodo = ({
                     <input type="submit" value="submit edit"></input>
                     <button onClick={handleDeleteTodo}>delete</button>
                 </form>
-                <button onClick={() => setTodoInspectModeState(false)}>QUIT</button>
+                <button onClick={() => setEditMode(false)}>QUIT</button>
             </>
         );
     }
