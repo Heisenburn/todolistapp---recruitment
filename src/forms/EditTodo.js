@@ -79,6 +79,7 @@ const TodoInspectMode = ({
 
     if (todoInspectModeState === true) {
         return (
+            <>
             <form onSubmit={handleEditSubmitForm}>
                 <label htmlFor="editTodoInput">Edit element</label>
                 <input
@@ -100,6 +101,8 @@ const TodoInspectMode = ({
                 <input type="submit" value="submit edit"></input>
                 <button onClick={handleDeleteTodo}>delete</button>
             </form>
+            <button onClick={(()=> setTodoInspectModeState(false))}>QUIT</button>
+            </>
         );
     }
     return null;

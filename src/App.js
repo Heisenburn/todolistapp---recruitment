@@ -5,6 +5,7 @@ import { StyledContainer, StyledTodoElement } from './styles/styled';
 import { CheckedSVG } from './icons/svgIcons';
 // import './styles/globalStyles.css';
 import { makeFetchRequest } from './apiFunctions/get';
+import ReactLoading from 'react-loading';
 
 function App() {
     const [todos, setTodos] = useState([]);
@@ -19,19 +20,32 @@ function App() {
         editTodoInputValue: '',
     });
 
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+
     useEffect(() => {
         const response = makeFetchRequest(); //get values at a startup
 
         response
             .then((result) => {
+                if(result.message===undefined){ //only if records exists
+                
                 let filteredResults = result.data.map((item) => {
                     const { candidate: removedKey, ...rest } = item;
                     return rest;
                 });
-                setTodos(filteredResults);
-                // console.log(filteredResults)
+                setTimeout(()=>{ //effect of downloading
+
+                    setTodos(filteredResults);
+                    
+                    setIsFetchCompleted(true)
+                },1000)
+            }else{
+                setIsFetchCompleted(true)
+            }
+               
             })
             .catch((err) => console.log(err));
+            
     }, []);
 
     const handleTodoElementClick = (itemID) => {
@@ -61,7 +75,8 @@ function App() {
         return null;
     };
     const ShowTodoList = ({ isCompletedVisible }) => {
-        if (todoInspectModeState == false) {
+        if (todoInspectModeState === false) {
+            if(todos.length >=1){
             if (isCompletedVisible === false) {
                 return (
                     <ul>
@@ -92,20 +107,35 @@ function App() {
                     ))}
                 </ul>
             );
+                    }
+                    else{
+            return <p>Add first element</p>
         }
-        return null;
-    };
+    }
+    return null;
+}
+
+    const Loading = () =>{
+        if(isFetchCompleted===false){
+        return(
+            <ReactLoading type={'spin'} color={'black'} height={667} width={375} />
+        )
+    }
+    return null;
+    }
 
     return (
         <StyledContainer>
+           <Loading/>
             <AddTodo
                 todoInspectModeState={todoInspectModeState}
                 controlledInputValues={controlledInputValues}
                 setControlledInputValues={setControlledInputValues}
                 setTodos={setTodos}
                 todos={todos}
+                isFetchCompleted={isFetchCompleted}
             />
-
+            <ToggleFinishedTask />
             <EditTodo
                 todos={todos}
                 setTodos={setTodos}
@@ -115,8 +145,7 @@ function App() {
                 setTodoInspectModeState={setTodoInspectModeState}
                 todoInspectModeState={todoInspectModeState}
             />
-            <ShowTodoList isCompletedVisible={showCompletedMode} />
-            <ToggleFinishedTask />
+            <ShowTodoList isCompletedVisible={showCompletedMode}/>
         </StyledContainer>
     );
 }
