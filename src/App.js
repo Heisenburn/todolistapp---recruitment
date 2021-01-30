@@ -1,23 +1,13 @@
 import { useState, useEffect } from 'react';
 import AddTodo from './forms/AddTodo';
 import EditTodo from './forms/EditTodo';
-import {StyledContainer, StyledTodoElement} from './styles/styled';
-import {CheckedSVG} from './icons/svgIcons';
+import { StyledContainer, StyledTodoElement } from './styles/styled';
+import { CheckedSVG } from './icons/svgIcons';
 // import './styles/globalStyles.css';
-import {makeFetchRequest} from './apiFunctions/get';
-import {deleteOnServer} from './apiFunctions/send';
+import { makeFetchRequest } from './apiFunctions/get';
+import { deleteOnServer } from './apiFunctions/send';
 
 function App() {
-    // useEffect( () => {
-    //     deleteOnServer()
-        
-    // }, [])
-
-    const [controlledInputValues, setControlledInputValues] = useState({
-        addNewTodoInputValue: '',
-        editTodoInputValue: '',
-    });
-
     const [todos, setTodos] = useState([]);
 
     const [showCompletedMode, setShowCompletedMode] = useState(false);
@@ -25,12 +15,38 @@ function App() {
 
     const [elementCurrentlyBeingEdited, setElementCurrentlyBeingEdited] = useState(null);
 
+    useEffect(() => {
+        const response = makeFetchRequest();
+
+        response
+            .then((result) => {
+
+                
+              
+                let filteredResults = result.data.map((item) => {
+                    const { 'candidate': removedKey, ...rest } = item;
+                    return rest
+                    
+                 
+                });
+                setTodos(filteredResults)
+                console.log(filteredResults)
+                
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    const [controlledInputValues, setControlledInputValues] = useState({
+        addNewTodoInputValue: '',
+        editTodoInputValue: '',
+    });
+
     const handleTodoElementClick = (index) => {
         setTodoInspectModeState(true);
 
         setControlledInputValues({
             ...controlledInputValues,
-            editTodoInputValue: todos[index].value,
+            editTodoInputValue: todos[index].task,
         });
 
         setElementCurrentlyBeingEdited(index);
@@ -38,7 +54,7 @@ function App() {
 
     const ToggleFinishedTask = () => {
         if (
-            (todos.find((item) => item.isCompleted === 1) !== undefined) &
+            (todos.find((item) => item.is_completed === 1) !== undefined) &
             (todoInspectModeState === false)
         ) {
             return (
@@ -55,12 +71,12 @@ function App() {
                 <ul>
                     {todos.map(
                         (item, index) =>
-                            item.isCompleted === 0 && (
+                            item.is_completed === 0 && (
                                 <StyledTodoElement
                                     key={index}
                                     onClick={() => handleTodoElementClick(index)}
                                 >
-                                    <p key={index + 1}>{item.value}</p>
+                                    <p key={index + 1}>{item.task}</p>
                                 </StyledTodoElement>
                             ),
                     )}
@@ -71,8 +87,8 @@ function App() {
             <ul>
                 {todos.map((item, index) => (
                     <StyledTodoElement key={index} onClick={() => handleTodoElementClick(index)}>
-                        <p key={index + 1}>{item.value}</p>
-                        <CheckedSVG key={index + 2} isCompleted={item.isCompleted} />
+                        <p key={index + 1}>{item.task}</p>
+                        <CheckedSVG key={index + 2} is_completed={item.is_completed} />
                     </StyledTodoElement>
                 ))}
             </ul>

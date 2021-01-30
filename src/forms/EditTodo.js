@@ -22,10 +22,10 @@ const TodoInspectMode = ({
     const handleClickCheckbox = () => {
         let tempArray = [...todos];
 
-        if(tempArray[elementCurrentlyBeingEdited].isCompleted ===0){
-            tempArray[elementCurrentlyBeingEdited].isCompleted = 1
+        if(tempArray[elementCurrentlyBeingEdited].is_completed ===0){
+            tempArray[elementCurrentlyBeingEdited].is_completed = 1
         }else{
-            tempArray[elementCurrentlyBeingEdited].isCompleted = 0
+            tempArray[elementCurrentlyBeingEdited].is_completed = 0
         }
     
         setTodos(tempArray);
@@ -39,8 +39,8 @@ const TodoInspectMode = ({
         filteredArray = filteredArray.map((item, index) => {
             return {
                 id: index,
-                value: item.value,
-                isCompleted: item.isCompleted,
+                task: item.task,
+                is_completed: item.is_completed,
             };
         });
 
@@ -79,7 +79,7 @@ const TodoInspectMode = ({
                 <input
                     type="checkbox"
                     onClick={() => handleClickCheckbox(elementCurrentlyBeingEdited)}
-                    defaultChecked={todos[elementCurrentlyBeingEdited].isCompleted===1}
+                    defaultChecked={todos[elementCurrentlyBeingEdited].is_completed===1}
                 ></input>
 
                 <input type="submit" value="submit edit"></input>

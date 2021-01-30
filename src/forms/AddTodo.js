@@ -16,8 +16,9 @@ const AddTodo = ({
             
             let tempAddObject = {
                 id: todos.length,
-                value: controlledInputValues.addNewTodoInputValue,
-                isCompleted: 0,
+                is_completed: 0,
+                task: controlledInputValues.addNewTodoInputValue,
+                
             }
             setTodos([
                 ...todos,tempAddObject,
@@ -38,7 +39,7 @@ const AddTodo = ({
                     onChange={(event) =>
                         setControlledInputValues({
                             ...controlledInputValues,
-                            addNewTodoInputValue: event.target.value,
+                            addNewTodoInputValue: event.target.task,
                         })
                     }
                 ></input>
