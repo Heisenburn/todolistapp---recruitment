@@ -3,7 +3,7 @@ import AddTodo from '../components/AddTodo/AddTodo';
 import EditTodo from '../components/EditTodo/EditTodo';
 import ShowTodoList from '../components/ShowTodoList/ShowTodoList';
 import { StyledContainer } from '../styles/styled';
-// import './styles/globalStyles.css';
+
 import { makeFetchRequest } from '../apiFunctions/get';
 import ReactLoading from 'react-loading';
 

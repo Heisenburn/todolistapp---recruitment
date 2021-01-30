@@ -61,7 +61,7 @@ const ShowTodoList = ({
                     </ul>
                 );
             } else {
-                return <p>Add first element</p>;
+                return  <p>Add first element...</p>;
             }
         }
         return null;
