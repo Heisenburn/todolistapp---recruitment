@@ -1,5 +1,5 @@
 import { StyledTodoElement } from '../../styles/styled';
-import { CheckedSVG } from '../../icons/svgIcons';
+import { CheckedSVG } from '../../assets/icons/svgIcons';
 import ToggleFinishedTasks from './ToggleFinishedTasks';
 
 const ShowTodoList = ({

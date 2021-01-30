@@ -7,6 +7,8 @@ import { StyledContainer } from '../styles/styled';
 import { makeFetchRequest } from '../apiFunctions/get';
 import ReactLoading from 'react-loading';
 
+import Header from '../components/Header/Header';
+
 function App() {
     const [todos, setTodos] = useState([]);
     const [showCompletedMode, setShowCompletedMode] = useState(true);
@@ -46,7 +48,7 @@ function App() {
 
     const Loading = () => {
         if (isCommunicatingWithServer === true) {
-            return <ReactLoading type={'spin'} color={'black'} height={667} width={375} />;
+            return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
         }
         return null;
     };
@@ -54,6 +56,7 @@ function App() {
     return (
         <StyledContainer>
             <Loading />
+            <Header />
             <AddTodo
                 editMode={editMode}
                 controlledInputValues={controlledInputValues}

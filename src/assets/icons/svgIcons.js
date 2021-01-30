@@ -20,4 +20,5 @@ export const CheckedSVG = ({ is_completed }) => {
         );
     }
     return null;
-    };
+};
+ 

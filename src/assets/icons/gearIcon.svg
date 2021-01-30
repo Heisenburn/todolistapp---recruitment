@@ -1,0 +1,40 @@
+<svg 
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="0.167in" height="0.181in">
+<defs>
+<filter filterUnits="userSpaceOnUse" id="Filter_0" x="0px" y="0px" width="12px" height="13px"  >
+    <feOffset in="SourceAlpha" dx="0" dy="1" />
+    <feGaussianBlur result="blurOut" stdDeviation="0" />
+    <feFlood flood-color="rgb(0, 0, 0)" result="floodOut" />
+    <feComposite operator="atop" in="floodOut" in2="blurOut" />
+    <feComponentTransfer><feFuncA type="linear" slope="0.48"/></feComponentTransfer>
+    <feMerge>
+    <feMergeNode/>
+    <feMergeNode in="SourceGraphic"/>
+  </feMerge>
+</filter>
+<filter id="Filter_1">
+    <feOffset in="SourceAlpha" dx="0" dy="1" />
+    <feGaussianBlur result="blurOut" stdDeviation="0" />
+    <feFlood flood-color="rgb(255, 255, 255)" result="floodOut" />
+    <feComposite operator="out" in="floodOut" in2="blurOut" result="compOut" />
+    <feComposite operator="in" in="compOut" in2="SourceAlpha" />
+    <feComponentTransfer><feFuncA type="linear" slope="0.31"/></feComponentTransfer>
+    <feBlend mode="normal" in2="SourceGraphic" />
+</filter>
+<linearGradient id="PSgrad_0" x1="0%" x2="0%" y1="100%" y2="0%">
+  <stop offset="0%" stop-color="rgb(193,118,45)" stop-opacity="1" />
+  <stop offset="6%" stop-color="rgb(209,159,80)" stop-opacity="1" />
+  <stop offset="100%" stop-color="rgb(247,213,158)" stop-opacity="1" />
+</linearGradient>
+
+</defs>
+<g filter="url(#Filter_0)">
+<g filter="url(#Filter_1)">
+<path fill-rule="evenodd"  fill-opacity="0" fill="rgb(146, 146, 147)"
+ d="M12.000,5.000 L12.000,6.917 L10.234,6.917 C10.227,6.935 10.215,7.534 10.208,7.552 C10.149,7.714 10.057,7.856 9.980,8.008 L11.239,9.293 L9.117,11.414 L7.807,10.076 C7.702,10.122 7.108,10.186 7.000,10.224 L7.000,12.000 L5.000,12.000 L5.000,10.224 C4.887,10.184 4.289,10.118 4.181,10.069 L2.859,11.391 L0.738,9.269 L2.010,7.997 C1.927,7.833 1.829,7.092 1.766,6.917 L0.000,6.917 L0.000,4.917 L1.766,4.917 C1.806,4.804 1.873,4.290 1.922,4.182 L0.519,2.793 L2.641,0.671 L4.001,2.019 C4.166,1.935 4.324,1.838 4.500,1.776 L4.500,-0.000 L7.000,-0.000 L7.000,1.776 C7.171,1.836 7.824,1.931 7.985,2.012 L9.313,0.671 L11.434,2.793 L10.071,4.168 C10.123,4.281 10.192,4.883 10.234,5.000 L12.000,5.000 ZM6.000,3.750 C4.757,3.750 3.750,4.757 3.750,6.000 C3.750,7.243 4.757,8.250 6.000,8.250 C7.243,8.250 8.250,7.243 8.250,6.000 C8.250,4.757 7.243,3.750 6.000,3.750 Z"/>
+</g></g>
+<path fill="url(#PSgrad_0)"
+ d="M12.000,5.000 L12.000,6.917 L10.234,6.917 C10.227,6.935 10.215,7.534 10.208,7.552 C10.149,7.714 10.057,7.856 9.980,8.008 L11.239,9.293 L9.117,11.414 L7.807,10.076 C7.702,10.122 7.108,10.186 7.000,10.224 L7.000,12.000 L5.000,12.000 L5.000,10.224 C4.887,10.184 4.289,10.118 4.181,10.069 L2.859,11.391 L0.738,9.269 L2.010,7.997 C1.927,7.833 1.829,7.092 1.766,6.917 L0.000,6.917 L0.000,4.917 L1.766,4.917 C1.806,4.804 1.873,4.290 1.922,4.182 L0.519,2.793 L2.641,0.671 L4.001,2.019 C4.166,1.935 4.324,1.838 4.500,1.776 L4.500,-0.000 L7.000,-0.000 L7.000,1.776 C7.171,1.836 7.824,1.931 7.985,2.012 L9.313,0.671 L11.434,2.793 L10.071,4.168 C10.123,4.281 10.192,4.883 10.234,5.000 L12.000,5.000 ZM6.000,3.750 C4.757,3.750 3.750,4.757 3.750,6.000 C3.750,7.243 4.757,8.250 6.000,8.250 C7.243,8.250 8.250,7.243 8.250,6.000 C8.250,4.757 7.243,3.750 6.000,3.750 Z"/>
+</svg>
