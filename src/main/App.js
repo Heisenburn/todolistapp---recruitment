@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import AddTodo from '../forms/AddTodo';
-import EditTodo from '../forms/EditTodo';
+import AddTodo from '../forms/AddTodo/AddTodo';
+import EditTodo from '../forms/EditTodo/EditTodo';
 import { StyledContainer } from '../styles/styled';
 // import './styles/globalStyles.css';
 import { makeFetchRequest } from '../apiFunctions/get';
@@ -63,12 +63,7 @@ function App() {
                 todos={todos}
                 isCommunicatingWithServer={isCommunicatingWithServer}
             />
-            <ToggleFinishedTasks
-                todos={todos}
-                todoInspectModeState={todoInspectModeState}
-                setShowCompletedMode={setShowCompletedMode}
-                showCompletedMode={showCompletedMode}
-            />
+           
             <EditTodo
                 todos={todos}
                 setTodos={setTodos}

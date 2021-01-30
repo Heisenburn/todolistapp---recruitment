@@ -10,6 +10,10 @@ const ShowTodoList = ({
     todos,
     controlledInputValues,
 }) => {
+
+
+    
+
     const handleTodoElementClick = (itemID) => {
         setTodoInspectModeState(true);
 
@@ -62,5 +66,14 @@ const ShowTodoList = ({
     }
     return null;
 };
+
+
+<ToggleFinishedTasks
+todos={todos}
+todoInspectModeState={todoInspectModeState}
+setShowCompletedMode={setShowCompletedMode}
+showCompletedMode={showCompletedMode}
+/>
+
 
 export default ShowTodoList;
