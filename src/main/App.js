@@ -56,7 +56,10 @@ function App() {
     return (
         <StyledContainer>
             <Loading />
-            <Header />
+            <Header
+                setShowCompletedMode={setShowCompletedMode}
+                showCompletedMode={showCompletedMode}
+            />
             <AddTodo
                 editMode={editMode}
                 controlledInputValues={controlledInputValues}

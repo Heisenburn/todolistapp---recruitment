@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-
 import addIcon from '../assets/icons/addIcon.svg';
 import gearIcon from '../assets/icons/gearIcon.svg';
 
 export const StyledContainer = styled.div`
-    padding-top: 100px;
     width: 30vw;
 
     #header {
@@ -12,22 +10,29 @@ export const StyledContainer = styled.div`
         height: 50px;
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+        justify-content: space-around;
 
+        .iconContainer {
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
 
         #addNew {
-            background: url(${addIcon});
+            background-image: url('${addIcon}');
         }
 
         #toggleCompleted {
-            background: url(${gearIcon});
+            background-image: url('${gearIcon}');
         }
 
-        
-        #addNew, #toggleCompleted {
-            background-position: center;
+        #addNew,
+        #toggleCompleted {
             background-repeat: no-repeat;
-            width: 50px;
+            background-size: cover;
         }
     }
 
