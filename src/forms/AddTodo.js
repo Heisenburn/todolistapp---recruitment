@@ -1,5 +1,5 @@
-import sendToServer from '../apiFunctions/send';
- 
+import {sendToServer} from '../apiFunctions/send';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddTodo = ({
     todoInspectModeState,
@@ -15,7 +15,7 @@ const AddTodo = ({
             //validating form
             
             let tempAddObject = {
-                id: todos.length,
+                id: uuidv4(),  //TODO: co jeśli stworzy takie same id jak na serwerze?
                 is_completed: 0,
                 task: controlledInputValues.addNewTodoInputValue,
                 
@@ -25,7 +25,7 @@ const AddTodo = ({
             ]);
 
             setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
-            // sendToServer(tempAddObject);
+            sendToServer(tempAddObject.task, 0, tempAddObject.id);
         }
     };
 
@@ -37,9 +37,10 @@ const AddTodo = ({
                     id="addNewTodoInput"
                     value={controlledInputValues.addNewTodoInputValue}
                     onChange={(event) =>
+                        
                         setControlledInputValues({
                             ...controlledInputValues,
-                            addNewTodoInputValue: event.target.task,
+                            addNewTodoInputValue: event.target.value,
                         })
                     }
                 ></input>

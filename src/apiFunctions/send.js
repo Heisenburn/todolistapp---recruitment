@@ -1,9 +1,9 @@
-export const sendToServer = (elementToBeSend) => {
+export const sendToServer = (task,is_completed=0, id='') => {
 
     const customFormData = new FormData();
-    customFormData.append('task', elementToBeSend.value);
-    customFormData.append('is_completed', 0);
-    customFormData.append('id', '');
+    customFormData.append('task', task);
+    customFormData.append('is_completed', is_completed);
+    customFormData.append('id', id);
  
     fetch(`https://react.massivepixel.io/api/rudnik.marcin/`, {
         method: 'POST',
@@ -17,14 +17,14 @@ export const sendToServer = (elementToBeSend) => {
 
  
 
-export const updateTodoOnServer = () => {
+export const updateTodoOnServer = (task,id, is_completed=0) => {
 
     const customFormData = new FormData();
-    customFormData.append('task', 'test test test');
-    customFormData.append('is_completed', 0);
+    customFormData.append('task', `${task}`);
+    customFormData.append('is_completed', is_completed);
     // customFormData.append('id', '7dd3ba50-274a-4151-8eb5-0d137a2e81f1');
  
-    fetch(`https://react.massivepixel.io/api/rudnik.marcin/7dd3ba50-274a-4151-8eb5-0d137a2e81f1`, {
+    fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
         method: 'POST',
         body: customFormData,
     })
