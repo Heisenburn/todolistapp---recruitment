@@ -1,4 +1,5 @@
 import {updateTodoOnServer} from '../apiFunctions/send';
+import {deleteOnServer} from '../apiFunctions/send';
  
 
 const TodoInspectMode = ({
@@ -34,16 +35,16 @@ const TodoInspectMode = ({
 
     const handleDeleteTodo = (event) => {
         event.preventDefault();
-        let filteredArray = todos.filter((item) => item.id !== elementCurrentlyBeingEdited);
+        let filteredArray = todos.filter((item,index) => index !== elementCurrentlyBeingEdited);
 
         filteredArray = filteredArray.map((item, index) => {
             return {
-                id: index,
+                id: todos[elementCurrentlyBeingEdited].id,
                 task: item.task,
                 is_completed: item.is_completed,
             };
         });
-
+        deleteOnServer(todos[elementCurrentlyBeingEdited].id)
         setTodos(filteredArray);
         setTodoInspectModeState(false);
     };

@@ -35,10 +35,10 @@ export const updateTodoOnServer = () => {
 
 
 
-export const deleteOnServer = () => {
+export const deleteOnServer = (id) => {
 
  
-    fetch(`https://react.massivepixel.io/api/rudnik.marcin/dupadupa`, {
+    fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
         method: 'DELETE',
      
     })
