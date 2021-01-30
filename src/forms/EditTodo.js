@@ -1,3 +1,6 @@
+import {updateTodoOnServer} from '../apiFunctions/send';
+ 
+
 const TodoInspectMode = ({
     todos,
     setTodos,
@@ -13,6 +16,7 @@ const TodoInspectMode = ({
         tempArray[elementCurrentlyBeingEdited].value = newValue;
 
         setTodos(tempArray);
+        updateTodoOnServer()
     };
 
     const handleClickCheckbox = () => {
@@ -53,6 +57,8 @@ const TodoInspectMode = ({
             handleEditTodo(controlledInputValues.editTodoInputValue);
             setControlledInputValues({ ...controlledInputValues, editTodoInputValue: '' });
             setTodoInspectModeState(false);
+            
+             
         }
     };
 

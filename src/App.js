@@ -1,26 +1,18 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import AddTodo from './forms/AddTodo';
 import EditTodo from './forms/EditTodo';
-
-const makeFetchRequest =  ()=>{
-     fetch('https://react.massivepixel.io/api/surname.name', {
-        
-      })
-      .then(response => response.json())
-      .then(json => console.log(json))
-      .catch(error => console.log('Error:: ' + error.message))
-
-}
-
-
+import {StyledContainer, StyledTodoElement} from './styles/styled';
+import {CheckedSVG} from './icons/svgIcons';
+// import './styles/globalStyles.css';
+import {makeFetchRequest} from './apiFunctions/get';
+import {deleteOnServer} from './apiFunctions/send';
 
 function App() {
-
     // useEffect( () => {
-    //     makeFetchRequest()
-    // }, []) 
-    
+    //     deleteOnServer()
+        
+    // }, [])
+
     const [controlledInputValues, setControlledInputValues] = useState({
         addNewTodoInputValue: '',
         editTodoInputValue: '',
@@ -45,8 +37,10 @@ function App() {
     };
 
     const ToggleFinishedTask = () => {
-        if (todos.find((item) => item.isCompleted === 1) !== undefined & todoInspectModeState === false) {
-             
+        if (
+            (todos.find((item) => item.isCompleted === 1) !== undefined) &
+            (todoInspectModeState === false)
+        ) {
             return (
                 <button onClick={() => setShowCompletedMode(!showCompletedMode)}>
                     Toggle finished tasks
@@ -67,7 +61,6 @@ function App() {
                                     onClick={() => handleTodoElementClick(index)}
                                 >
                                     <p key={index + 1}>{item.value}</p>
-                                
                                 </StyledTodoElement>
                             ),
                     )}
@@ -87,7 +80,7 @@ function App() {
     };
 
     return (
-        <>
+        <StyledContainer>
             <AddTodo
                 todoInspectModeState={todoInspectModeState}
                 controlledInputValues={controlledInputValues}
@@ -106,42 +99,8 @@ function App() {
                 todoInspectModeState={todoInspectModeState}
             />
             <ShowTodoList isCompletedVisible={showCompletedMode} />
-        </>
+        </StyledContainer>
     );
 }
 
-
 export default App;
-
-
-const StyledTodoElement = styled.li`
-    display: flex;
-    border: 1px solid black;
-    p {
-        margin: 0;
-    }
-`;
-
-const CheckedSVG = ({ isCompleted }) => {
-    if (isCompleted===1) {
-        return (
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="icon icon-tabler icon-tabler-circle-check"
-                width="44"
-                height="44"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="#2c3e50"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <circle cx="12" cy="12" r="9" />
-                <path d="M9 12l2 2l4 -4" />
-            </svg>
-        );
-    }
-    return null;
-};

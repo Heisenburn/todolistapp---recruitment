@@ -1,18 +1,5 @@
-const addTodoToServer = (elementToBeSend) => {
-
-    const customFormData = new FormData();
-    customFormData.append('task', elementToBeSend.value);
-    customFormData.append('is_completed', 0);
-    customFormData.append('id', '');
-    
-    fetch(`https://react.massivepixel.io/api/rudnik.marcin/${elementToBeSend.id}`, {
-        method: 'POST',
-        body: customFormData,
-    })
-        .then((response) => response.json())
-        .then((json) => console.log(json))
-        .catch((error) => console.log('Error:: ' + error.message));
-};
+import sendToServer from '../apiFunctions/send';
+ 
 
 const AddTodo = ({
     todoInspectModeState,
@@ -37,7 +24,7 @@ const AddTodo = ({
             ]);
 
             setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
-            addTodoToServer(tempAddObject);
+            // sendToServer(tempAddObject);
         }
     };
 
