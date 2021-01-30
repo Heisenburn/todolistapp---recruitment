@@ -4,7 +4,7 @@ import gearIcon from '../assets/icons/gearIcon.svg';
 
 export const StyledContainer = styled.div`
     width: 30vw;
-
+  
     #header {
         background: #a96621;
         height: 50px;
@@ -44,7 +44,7 @@ export const StyledContainer = styled.div`
 export const StyledTodoElement = styled.li`
     display: flex;
     border: 1px solid black;
-    min-width: 200px;
+    margin: 20px 0;
     p {
         margin: 0;
     }

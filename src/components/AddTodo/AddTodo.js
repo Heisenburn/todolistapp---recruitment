@@ -7,7 +7,9 @@ const AddTodo = ({
     todos,
     controlledInputValues,
     setControlledInputValues,
-    isCommunicatingWithServer
+    isCommunicatingWithServer,
+    addMode,
+    setAddMode
 }) => {
     const handleAddTodo = (event) => {
         event.preventDefault();
@@ -21,16 +23,17 @@ const AddTodo = ({
                 task: controlledInputValues.addNewTodoInputValue,
                 
             }
-            setTodos([
-                ...todos,tempAddObject,
-            ]);
+            // setTodos([
+            //     ...todos,tempAddObject,
+            // ]);
 
             setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
             sendToServer(tempAddObject.task, 0, tempAddObject.id);
+            setAddMode(false)
         }
     };
 
-    if (editMode === false && isCommunicatingWithServer === false) {
+    if (editMode === false && isCommunicatingWithServer === false && addMode === true) {
         return (
             <form onSubmit={handleAddTodo}>
                 <label htmlFor="addNewTodoInput">Add new element</label>

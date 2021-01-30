@@ -45,7 +45,7 @@ export const deleteOnServer = (id) => {
         .then((response) => response.json())
         .then((json) => {
             console.log(json);
-            return json
+          
         })
         .catch((error) => console.log('Error:: ' + error.message));
 

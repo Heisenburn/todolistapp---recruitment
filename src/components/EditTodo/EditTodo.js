@@ -1,5 +1,6 @@
 import { updateTodoOnServer } from '../../apiFunctions/send';
 import { deleteOnServer } from '../../apiFunctions/send';
+ 
 
 const EditTodo = ({
     todos,
@@ -8,7 +9,7 @@ const EditTodo = ({
     controlledInputValues,
     setControlledInputValues,
     setEditMode,
-    editMode,
+    editMode
 }) => {
     const handleEditTodo = (newValue) => {
         if (newValue !== todos[elementCurrentlyBeingEdited].task) {
@@ -47,21 +48,23 @@ const EditTodo = ({
 
     const handleDeleteTodo = (event) => {
         event.preventDefault();
-
         deleteOnServer(todos[elementCurrentlyBeingEdited].id);
-        let filteredArray = todos.filter((item, index) => index !== elementCurrentlyBeingEdited); //removing first the element
 
+        let filteredArray = todos.filter((item, index) => index !== elementCurrentlyBeingEdited); //removing first the element
+    
         //then returning new array of objects
 
-        filteredArray = filteredArray.map((item) => {
+        filteredArray = filteredArray.map((item, index) => {
             return {
-                id: todos[elementCurrentlyBeingEdited].id,
+                id: todos[index].id,
                 task: item.task,
                 is_completed: item.is_completed,
             };
         });
 
-        setTodos(filteredArray);
+        setTodos(filteredArray)
+        // getTodos(setTodos,setCommunicatingWithServer)
+         
         setEditMode(false);
     };
 

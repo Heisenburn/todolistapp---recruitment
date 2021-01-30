@@ -3,8 +3,9 @@ import AddTodo from '../components/AddTodo/AddTodo';
 import EditTodo from '../components/EditTodo/EditTodo';
 import ShowTodoList from '../components/ShowTodoList/ShowTodoList';
 import { StyledContainer } from '../styles/styled';
-
+ 
 import { makeFetchRequest } from '../apiFunctions/get';
+
 import ReactLoading from 'react-loading';
 
 import Header from '../components/Header/Header';
@@ -18,6 +19,7 @@ function App() {
         addNewTodoInputValue: '',
         editTodoInputValue: '',
     });
+    const [addMode, setAddMode] = useState(false);
     const [isCommunicatingWithServer, setCommunicatingWithServer] = useState(true);
 
     useEffect(() => {
@@ -27,24 +29,24 @@ function App() {
             .then((result) => {
                 if (result.message === undefined) {
                     //only if records exists
-
+    
                     let filteredResults = result.data.map((item) => {
                         const { candidate: removedKey, ...rest } = item;
                         return rest;
                     });
+    
                     setTimeout(() => {
                         //effect of downloading
-
-                        setTodos(filteredResults);
-
                         setCommunicatingWithServer(false);
-                    }, 1000);
+                        setTodos(filteredResults);
+                    }, );
                 } else {
                     setCommunicatingWithServer(false);
                 }
             })
             .catch((err) => console.log(err));
-    }, []);
+        
+    }, [todos]);
 
     const Loading = () => {
         if (isCommunicatingWithServer === true) {
@@ -59,6 +61,8 @@ function App() {
             <Header
                 setShowCompletedMode={setShowCompletedMode}
                 showCompletedMode={showCompletedMode}
+                setAddMode={setAddMode}
+                addMode={addMode}
             />
             <AddTodo
                 editMode={editMode}
@@ -67,6 +71,8 @@ function App() {
                 setTodos={setTodos}
                 todos={todos}
                 isCommunicatingWithServer={isCommunicatingWithServer}
+                addMode={addMode}
+                setAddMode={setAddMode}
             />
             <EditTodo
                 todos={todos}
@@ -76,6 +82,8 @@ function App() {
                 setControlledInputValues={setControlledInputValues}
                 setEditMode={setEditMode}
                 editMode={editMode}
+                setCommunicatingWithServer={setCommunicatingWithServer}
+                
             />
             <ShowTodoList
                 showCompletedMode={showCompletedMode}
@@ -86,6 +94,7 @@ function App() {
                 todos={todos}
                 controlledInputValues={controlledInputValues}
                 setShowCompletedMode={setShowCompletedMode}
+                isCommunicatingWithServer={isCommunicatingWithServer}
             />
         </StyledContainer>
     );
