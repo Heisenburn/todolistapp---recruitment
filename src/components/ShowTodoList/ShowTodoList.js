@@ -3,70 +3,57 @@ import { CheckedSVG } from '../../assets/icons/svgIcons';
 
 const ShowTodoList = ({
     showCompletedMode,
-    editMode,
     setEditMode,
     setControlledInputValues,
     setElementCurrentlyBeingEdited,
     todos,
     controlledInputValues,
-    isCommunicatingWithServer
+    isCommunicatingWithServer,
 }) => {
     const handleTodoElementClick = (index) => {
         setEditMode(true);
- 
 
         setControlledInputValues({
             ...controlledInputValues,
             editTodoInputValue: todos[index].task,
         });
 
-         
         setElementCurrentlyBeingEdited(index);
     };
 
-    if (editMode === false) {
-        if (todos.length >= 1) {
-            if (showCompletedMode === false) {
-                //TODO: DRY
-                return (
-                    <ul>
-                        {todos.map(
-                            (item, index) =>
-                                item.is_completed === 0 && (
-                                    <StyledTodoElement
-                                        key={index}
-                                        onClick={() => handleTodoElementClick(index)}
-                                    >
-                                        <p key={index + 1}>{item.task}</p>
-                                    </StyledTodoElement>
-                                ),
-                        )}
-                    </ul>
-                );
-            }
-            return (
-                <ul>
-                    {todos.map((item, index) => (
+    if (todos.length) {
+        return (
+       
+            <ul>
+                {todos.map((item, index) => {
+                    if (showCompletedMode) {
+                        return (
+                            <StyledTodoElement
+                                key={index}
+                                onClick={() => handleTodoElementClick(index)}
+                            >
+                                <p key={index + 1}>{item.task}</p>
+
+                                <CheckedSVG key={index + 2} is_completed={item.is_completed} />
+                            </StyledTodoElement>
+                        );
+                    } else if(!showCompletedMode && !item.is_completed){
+                        return(
                         <StyledTodoElement
                             key={index}
                             onClick={() => handleTodoElementClick(index)}
                         >
                             <p key={index + 1}>{item.task}</p>
-                            <CheckedSVG key={index + 2} is_completed={item.is_completed} />
                         </StyledTodoElement>
-                    ))}
-                </ul>
-            );
-        } else {
-            if(isCommunicatingWithServer===false){
-                return <p>Add first element...</p>;
-            }else{
-                return <p>Loading...</p>
-            }
-            
-        }
+                        )
+                    }
+                  
+                })}
+            </ul>
+        );
+    } else {
+        return !isCommunicatingWithServer ? <p>Add first element...</p> : <p>Loading...</p>;
     }
-    return null;
 };
 
 export default ShowTodoList;

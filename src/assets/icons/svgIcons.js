@@ -1,5 +1,5 @@
 export const CheckedSVG = ({ is_completed }) => {
-    if (is_completed === 1) {
+    if (is_completed) {
         return (
             <svg
                 xmlns="http://www.w3.org/2000/svg"

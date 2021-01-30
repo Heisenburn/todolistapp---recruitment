@@ -3,7 +3,7 @@ import AddTodo from '../components/AddTodo/AddTodo';
 import EditTodo from '../components/EditTodo/EditTodo';
 import ShowTodoList from '../components/ShowTodoList/ShowTodoList';
 import { StyledContainer } from '../styles/styled';
- 
+
 import { makeFetchRequest } from '../apiFunctions/get';
 
 import ReactLoading from 'react-loading';
@@ -27,29 +27,28 @@ function App() {
 
         response
             .then((result) => {
-                if (result.message === undefined) {
+                if (!result.message) {
                     //only if records exists
-    
+
                     let filteredResults = result.data.map((item) => {
                         const { candidate: removedKey, ...rest } = item;
                         return rest;
                     });
-    
+
                     setTimeout(() => {
                         //effect of downloading
                         setCommunicatingWithServer(false);
                         setTodos(filteredResults);
-                    }, );
+                    });
                 } else {
                     setCommunicatingWithServer(false);
                 }
             })
             .catch((err) => console.log(err));
-        
     }, [todos]);
 
     const Loading = () => {
-        if (isCommunicatingWithServer === true) {
+        if (isCommunicatingWithServer) {
             return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
         }
         return null;
@@ -58,22 +57,22 @@ function App() {
     return (
         <StyledContainer>
             <Loading />
+           
             <Header
                 setShowCompletedMode={setShowCompletedMode}
                 showCompletedMode={showCompletedMode}
                 setAddMode={setAddMode}
                 addMode={addMode}
             />
-            <AddTodo
-                editMode={editMode}
-                controlledInputValues={controlledInputValues}
-                setControlledInputValues={setControlledInputValues}
-                setTodos={setTodos}
-                todos={todos}
-                isCommunicatingWithServer={isCommunicatingWithServer}
-                addMode={addMode}
-                setAddMode={setAddMode}
-            />
+            {!editMode && addMode && (
+                <AddTodo
+                    controlledInputValues={controlledInputValues}
+                    setControlledInputValues={setControlledInputValues}
+                    setAddMode={setAddMode}
+                />
+            )}
+
+            {editMode &&
             <EditTodo
                 todos={todos}
                 setTodos={setTodos}
@@ -81,23 +80,26 @@ function App() {
                 controlledInputValues={controlledInputValues}
                 setControlledInputValues={setControlledInputValues}
                 setEditMode={setEditMode}
-                editMode={editMode}
                 setCommunicatingWithServer={setCommunicatingWithServer}
-                
             />
-            <ShowTodoList
-                showCompletedMode={showCompletedMode}
-                editMode={editMode}
-                setEditMode={setEditMode}
-                setControlledInputValues={setControlledInputValues}
-                setElementCurrentlyBeingEdited={setElementCurrentlyBeingEdited}
-                todos={todos}
-                controlledInputValues={controlledInputValues}
-                setShowCompletedMode={setShowCompletedMode}
-                isCommunicatingWithServer={isCommunicatingWithServer}
-            />
+}
+
+            {!editMode && (
+                <ShowTodoList
+                    showCompletedMode={showCompletedMode}
+                    setEditMode={setEditMode}
+                    setControlledInputValues={setControlledInputValues}
+                    setElementCurrentlyBeingEdited={setElementCurrentlyBeingEdited}
+                    todos={todos}
+                    controlledInputValues={controlledInputValues}
+                    setShowCompletedMode={setShowCompletedMode}
+                    isCommunicatingWithServer={isCommunicatingWithServer}
+                />
+            )}
+        
         </StyledContainer>
     );
 }
 
 export default App;
+ 

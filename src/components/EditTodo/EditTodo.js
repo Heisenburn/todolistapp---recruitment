@@ -1,6 +1,5 @@
 import { updateTodoOnServer } from '../../apiFunctions/send';
 import { deleteOnServer } from '../../apiFunctions/send';
- 
 
 const EditTodo = ({
     todos,
@@ -9,17 +8,15 @@ const EditTodo = ({
     controlledInputValues,
     setControlledInputValues,
     setEditMode,
-    editMode
 }) => {
     const handleEditTodo = (newValue) => {
         if (newValue !== todos[elementCurrentlyBeingEdited].task) {
-            //making sure value is new
             let tempArray = [...todos];
 
             tempArray[elementCurrentlyBeingEdited].task = newValue;
 
+            updateTodoOnServer(newValue, todos[elementCurrentlyBeingEdited].id); //first send to server then refresh todos
             setTodos(tempArray);
-            updateTodoOnServer(newValue, todos[elementCurrentlyBeingEdited].id);
         }
     };
 
@@ -51,7 +48,7 @@ const EditTodo = ({
         deleteOnServer(todos[elementCurrentlyBeingEdited].id);
 
         let filteredArray = todos.filter((item, index) => index !== elementCurrentlyBeingEdited); //removing first the element
-    
+
         //then returning new array of objects
 
         filteredArray = filteredArray.map((item, index) => {
@@ -62,53 +59,46 @@ const EditTodo = ({
             };
         });
 
-        setTodos(filteredArray)
-        // getTodos(setTodos,setCommunicatingWithServer)
-         
+        setTodos(filteredArray);
         setEditMode(false);
     };
 
     const handleEditSubmitForm = (event) => {
         event.preventDefault();
 
-        if (controlledInputValues.editTodoInputValue.length >= 1) {
-            //validating form
-
+        if (controlledInputValues.editTodoInputValue.length) {
             handleEditTodo(controlledInputValues.editTodoInputValue);
             setControlledInputValues({ ...controlledInputValues, editTodoInputValue: '' });
             setEditMode(false);
         }
     };
 
-    if (editMode === true) {
-        return (
-            <>
-                <form onSubmit={handleEditSubmitForm}>
-                    <label htmlFor="editTodoInput">Edit element</label>
-                    <input
-                        id="editTodoInput"
-                        value={controlledInputValues.editTodoInputValue}
-                        onChange={(event) =>
-                            setControlledInputValues({
-                                ...controlledInputValues,
-                                editTodoInputValue: event.target.value,
-                            })
-                        }
-                    ></input>
-                    <input
-                        type="checkbox"
-                        onClick={() => handleClickCheckbox(elementCurrentlyBeingEdited)}
-                        defaultChecked={todos[elementCurrentlyBeingEdited].is_completed === 1}
-                    ></input>
+    return (
+        <>
+            <form onSubmit={handleEditSubmitForm}>
+                <label htmlFor="editTodoInput">Edit element</label>
+                <input
+                    id="editTodoInput"
+                    value={controlledInputValues.editTodoInputValue}
+                    onChange={(event) =>
+                        setControlledInputValues({
+                            ...controlledInputValues,
+                            editTodoInputValue: event.target.value,
+                        })
+                    }
+                ></input>
+                <input
+                    type="checkbox"
+                    onClick={() => handleClickCheckbox(elementCurrentlyBeingEdited)}
+                    defaultChecked={todos[elementCurrentlyBeingEdited].is_completed === 1}
+                ></input>
 
-                    <input type="submit" value="submit edit"></input>
-                    <button onClick={handleDeleteTodo}>delete</button>
-                </form>
-                <button onClick={() => setEditMode(false)}>QUIT</button>
-            </>
-        );
-    }
-    return null;
+                <input type="submit" value="submit edit"></input>
+                <button onClick={handleDeleteTodo}>delete</button>
+            </form>
+            <button onClick={() => setEditMode(false)}>QUIT</button>
+        </>
+    );
 };
 
 export default EditTodo;
