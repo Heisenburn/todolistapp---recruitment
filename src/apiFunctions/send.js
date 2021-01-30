@@ -37,12 +37,17 @@ export const updateTodoOnServer = (task,id, is_completed=0) => {
 
 export const deleteOnServer = (id) => {
 
- 
-    fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
+     
+   const test = fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
         method: 'DELETE',
      
     })
         .then((response) => response.json())
-        .then((json) => console.log(json))
+        .then((json) => {
+            console.log(json);
+            return json
+        })
         .catch((error) => console.log('Error:: ' + error.message));
+
+        return test;
 };

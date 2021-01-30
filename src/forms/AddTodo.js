@@ -7,7 +7,7 @@ const AddTodo = ({
     todos,
     controlledInputValues,
     setControlledInputValues,
-    isFetchCompleted
+    isCommunicatingWithServer
 }) => {
     const handleAddTodo = (event) => {
         event.preventDefault();
@@ -30,7 +30,7 @@ const AddTodo = ({
         }
     };
 
-    if (todoInspectModeState === false && isFetchCompleted) {
+    if (todoInspectModeState === false && isCommunicatingWithServer === false) {
         return (
             <form onSubmit={handleAddTodo}>
                 <label htmlFor="addNewTodoInput">Add new element</label>

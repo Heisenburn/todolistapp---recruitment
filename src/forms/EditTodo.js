@@ -12,7 +12,8 @@ const TodoInspectMode = ({
     todoInspectModeState,
     
 }) => {
-    
+
+  
 
     const handleEditTodo = (newValue) => {
     
@@ -51,19 +52,26 @@ const TodoInspectMode = ({
 
     const handleDeleteTodo = (event) => {
         event.preventDefault();
-        let filteredArray = todos.filter((item, index) => index !== elementCurrentlyBeingEdited);
+       
+    
+        
 
-        filteredArray = filteredArray.map((item, index) => {
+        let filteredArray = todos.filter((index) => index !== elementCurrentlyBeingEdited);
+
+        filteredArray = filteredArray.map((item) => {
             return {
                 id: todos[elementCurrentlyBeingEdited].id,
-                task: item.task,
+                task: item.task,    
                 is_completed: item.is_completed,
             };
         });
-        deleteOnServer(todos[elementCurrentlyBeingEdited].id);
+        
         setTodos(filteredArray);
         setTodoInspectModeState(false);
-    };
+     
+       
+    }
+    
 
     const handleEditSubmitForm = (event) => {
         event.preventDefault();
