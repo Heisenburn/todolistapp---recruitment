@@ -17,24 +17,23 @@ function App() {
         editTodoInputValue: '',
     });
     const [addMode, setAddMode] = useState(false);
-    const [isCommunicatingWithServer, setCommunicatingWithServer] = useState(true);
-
+    const [isCommunicatingWithServer, setCommunicatingWithServer] = useState(false);
+ 
     useEffect(() => {
-        const response = makeFetchRequest(); //get todos at a startup
-
+        if(!isCommunicatingWithServer || !todos.length){
+        const response = makeFetchRequest(setCommunicatingWithServer); //get todos at a startup
         response
             .then((result) => {
                 if (!result.message) {
                     setTodos(result.data);
-                    setCommunicatingWithServer(false);
                 } else {
                     //zero todos in dB
-                    setCommunicatingWithServer(false);
                     setTodos([]);
                 }
             })
             .catch((err) => console.log(err));
-    }, [isCommunicatingWithServer]);
+        }
+    }, [isCommunicatingWithServer, todos.length]);
 
     const Loading = () => {
         return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;

@@ -11,10 +11,14 @@ const EditTodo = ({
 }) => {
     const handleEditTodo = (newValue) => {
         if (newValue !== todos[elementCurrentlyBeingEdited].task) {
-            setCommunicatingWithServer(true);
-            let tempArray = [...todos];
+            let tempArray = [...todos]; //m.in. kopia referencji - zmienia też na oryginalnej
             tempArray[elementCurrentlyBeingEdited].task = newValue;
-            updateTodoOnServer(newValue, todos[elementCurrentlyBeingEdited].id, todos[elementCurrentlyBeingEdited].is_completed);
+            updateTodoOnServer(
+                newValue,
+                todos[elementCurrentlyBeingEdited].id,
+                todos[elementCurrentlyBeingEdited].is_completed,
+                setCommunicatingWithServer,
+            );
         }
     };
 
@@ -28,6 +32,7 @@ const EditTodo = ({
                 todos[elementCurrentlyBeingEdited].task,
                 todos[elementCurrentlyBeingEdited].id,
                 1,
+                setCommunicatingWithServer,
             );
         } else {
             tempArray[elementCurrentlyBeingEdited].is_completed = 0;
@@ -35,6 +40,7 @@ const EditTodo = ({
                 todos[elementCurrentlyBeingEdited].task,
                 todos[elementCurrentlyBeingEdited].id,
                 0,
+                setCommunicatingWithServer,
             );
         }
         setEditMode(false);
@@ -43,8 +49,11 @@ const EditTodo = ({
     const handleDeleteTodo = (event) => {
         event.preventDefault();
         setCommunicatingWithServer(true);
-        deleteOnServer(todos[elementCurrentlyBeingEdited].id);
-        setEditMode(false);
+        deleteOnServer(
+            todos[elementCurrentlyBeingEdited].id,
+            setCommunicatingWithServer,
+            setEditMode,
+        );
     };
 
     const handleEditSubmitForm = (event) => {

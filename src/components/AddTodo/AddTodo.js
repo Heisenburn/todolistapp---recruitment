@@ -3,8 +3,8 @@ import { sendToServer } from '../../apiFunctions/send';
 const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, setCommunicatingWithServer }) => {
     const handleAddTodo = (event) => {
         event.preventDefault();
+        
         setCommunicatingWithServer(true)
-
         let tempAddObject = {
             is_completed: 0,
             task: controlledInputValues.addNewTodoInputValue,
@@ -12,9 +12,9 @@ const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, 
 
         controlledInputValues.addNewTodoInputValue.length && //validating form
         setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
-        sendToServer(tempAddObject.task, 0);
+        sendToServer(tempAddObject.task, 0, setCommunicatingWithServer);
         setAddMode(false);
- 
+       
     };
 
     return (
