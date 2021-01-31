@@ -3,11 +3,8 @@ import AddTodo from '../components/AddTodo/AddTodo';
 import EditTodo from '../components/EditTodo/EditTodo';
 import ShowTodoList from '../components/ShowTodoList/ShowTodoList';
 import { StyledContainer } from '../styles/styled';
-
 import { makeFetchRequest } from '../apiFunctions/get';
-
 import ReactLoading from 'react-loading';
-
 import Header from '../components/Header/Header';
 
 function App() {
@@ -23,7 +20,7 @@ function App() {
     const [isCommunicatingWithServer, setCommunicatingWithServer] = useState(true);
 
     useEffect(() => {
-        const response = makeFetchRequest(); //get values at a startup
+        const response = makeFetchRequest(); //get todos at a startup
 
         response
             .then((result) => {
@@ -31,75 +28,78 @@ function App() {
                     //only if records exists
 
                     let filteredResults = result.data.map((item) => {
+                        //removing candidate element
                         const { candidate: removedKey, ...rest } = item;
                         return rest;
                     });
 
-                    setTimeout(() => {
-                        //effect of downloading
-                        setCommunicatingWithServer(false);
-                        setTodos(filteredResults);
-                    });
+                    setTodos(filteredResults);
+
+                    setCommunicatingWithServer(false);
                 } else {
                     setCommunicatingWithServer(false);
+                    setTodos([])
                 }
             })
             .catch((err) => console.log(err));
-    }, [todos]);
+    }, [isCommunicatingWithServer]);
 
     const Loading = () => {
-        if (isCommunicatingWithServer) {
-            return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
-        }
-        return null;
+        return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
     };
 
-    return (
-        <StyledContainer>
-            <Loading />
-           
-            <Header
-                setShowCompletedMode={setShowCompletedMode}
-                showCompletedMode={showCompletedMode}
-                setAddMode={setAddMode}
-                addMode={addMode}
-            />
-            {!editMode && addMode && (
-                <AddTodo
-                    controlledInputValues={controlledInputValues}
-                    setControlledInputValues={setControlledInputValues}
-                    setAddMode={setAddMode}
-                />
-            )}
-
-            {editMode &&
-            <EditTodo
-                todos={todos}
-                setTodos={setTodos}
-                elementCurrentlyBeingEdited={elementCurrentlyBeingEdited}
-                controlledInputValues={controlledInputValues}
-                setControlledInputValues={setControlledInputValues}
-                setEditMode={setEditMode}
-                setCommunicatingWithServer={setCommunicatingWithServer}
-            />
-}
-
-            {!editMode && (
-                <ShowTodoList
-                    showCompletedMode={showCompletedMode}
-                    setEditMode={setEditMode}
-                    setControlledInputValues={setControlledInputValues}
-                    setElementCurrentlyBeingEdited={setElementCurrentlyBeingEdited}
-                    todos={todos}
-                    controlledInputValues={controlledInputValues}
+    if (!isCommunicatingWithServer) {
+        return (
+            <StyledContainer>
+                {!editMode && <h4>Click on element to edit it</h4>}
+                <Header
                     setShowCompletedMode={setShowCompletedMode}
-                    isCommunicatingWithServer={isCommunicatingWithServer}
+                    showCompletedMode={showCompletedMode}
+                    setAddMode={setAddMode}
+                    addMode={addMode}
                 />
-            )}
-        
-        </StyledContainer>
+                {!editMode && addMode && (
+                    <AddTodo
+                        setCommunicatingWithServer={setCommunicatingWithServer}
+                        controlledInputValues={controlledInputValues}
+                        setControlledInputValues={setControlledInputValues}
+                        setAddMode={setAddMode}
+                    />
+                )}
+
+                {editMode && (
+                    <EditTodo
+                        todos={todos}
+                        setTodos={setTodos}
+                        elementCurrentlyBeingEdited={elementCurrentlyBeingEdited}
+                        controlledInputValues={controlledInputValues}
+                        setControlledInputValues={setControlledInputValues}
+                        setEditMode={setEditMode}
+                        setCommunicatingWithServer={setCommunicatingWithServer}
+                    />
+                )}
+
+                {!editMode && (
+                    <ShowTodoList
+                        showCompletedMode={showCompletedMode}
+                        setEditMode={setEditMode}
+                        setControlledInputValues={setControlledInputValues}
+                        setElementCurrentlyBeingEdited={setElementCurrentlyBeingEdited}
+                        todos={todos}
+                        controlledInputValues={controlledInputValues}
+                        setShowCompletedMode={setShowCompletedMode}
+                        isCommunicatingWithServer={isCommunicatingWithServer}
+                    />
+                )}
+            </StyledContainer>
+        );
+    }
+    return (
+        <>
+            <h1>Loading...</h1>
+            <Loading />
+        </>
     );
 }
 
 export default App;
- 

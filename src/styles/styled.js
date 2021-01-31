@@ -45,7 +45,14 @@ export const StyledTodoElement = styled.li`
     display: flex;
     border: 1px solid black;
     margin: 20px 0;
+    svg{
+        border-right: 1px solid black;
+    }
     p {
         margin: 0;
+        padding-left: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `;

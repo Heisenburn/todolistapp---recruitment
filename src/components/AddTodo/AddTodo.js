@@ -1,8 +1,9 @@
 import { sendToServer } from '../../apiFunctions/send';
 
-const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode }) => {
+const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, setCommunicatingWithServer }) => {
     const handleAddTodo = (event) => {
         event.preventDefault();
+        setCommunicatingWithServer(true)
 
         let tempAddObject = {
             is_completed: 0,
