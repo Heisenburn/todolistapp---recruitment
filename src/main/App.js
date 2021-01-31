@@ -42,7 +42,7 @@ function App() {
     }, []);
 
     const Loading = () => {
-        return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
+        return <ReactLoading type={'spin'} color={'black'} height={'500px'} width={'500px'} />;
     };
 
     if (!isCommunicatingWithServer && !intialLoading) {
