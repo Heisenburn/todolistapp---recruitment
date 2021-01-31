@@ -1,13 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
-import backgroundImported from '../assets/images/backgroundImage.png';
+ 
 
 const GlobalStyle = createGlobalStyle`
 body {
-  background: url(${backgroundImported}) no-repeat;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
+    background: #80808080;
+ 
   display: flex;
   align-items: center;
   flex-direction: column;
