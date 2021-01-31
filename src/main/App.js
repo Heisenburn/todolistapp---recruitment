@@ -18,28 +18,34 @@ function App() {
     });
     const [addMode, setAddMode] = useState(false);
     const [isCommunicatingWithServer, setCommunicatingWithServer] = useState(false);
- 
+    const [intialLoading, setInitialLoading] = useState(true);
     useEffect(() => {
-        if(!isCommunicatingWithServer || !todos.length){
-        const response = makeFetchRequest(setCommunicatingWithServer); //get todos at a startup
-        response
-            .then((result) => {
-                if (!result.message) {
-                    setTodos(result.data);
-                } else {
-                    //zero todos in dB
-                    setTodos([]);
-                }
-            })
-            .catch((err) => console.log(err));
+        if (!isCommunicatingWithServer) {
+            const response = makeFetchRequest(setCommunicatingWithServer); //get todos at a startup
+            response
+                .then((result) => {
+                    if (!result.message) {
+                        setTodos(result.data);
+                    } else {
+                        //zero todos in dB
+                        setTodos([]);
+                    }
+                })
+                .catch((err) => console.log(err));
         }
-    }, [isCommunicatingWithServer, todos.length]);
+    }, [isCommunicatingWithServer]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setInitialLoading(false);
+        }, 1000);
+    }, []);
 
     const Loading = () => {
         return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
     };
 
-    if (!isCommunicatingWithServer) {
+    if (!isCommunicatingWithServer && !intialLoading) {
         return (
             <StyledContainer>
                 {!editMode && <h4>Click on element to edit it</h4>}

@@ -11,6 +11,7 @@ const EditTodo = ({
 }) => {
     const handleEditTodo = (newValue) => {
         if (newValue !== todos[elementCurrentlyBeingEdited].task) {
+            setCommunicatingWithServer(true);
             let tempArray = [...todos]; //m.in. kopia referencji - zmienia też na oryginalnej
             tempArray[elementCurrentlyBeingEdited].task = newValue;
             updateTodoOnServer(
