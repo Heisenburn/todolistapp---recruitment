@@ -14,7 +14,7 @@ const EditTodo = ({
             setCommunicatingWithServer(true);
             let tempArray = [...todos];
             tempArray[elementCurrentlyBeingEdited].task = newValue;
-            updateTodoOnServer(newValue, todos[elementCurrentlyBeingEdited].id);
+            updateTodoOnServer(newValue, todos[elementCurrentlyBeingEdited].id, todos[elementCurrentlyBeingEdited].is_completed);
         }
     };
 
@@ -84,8 +84,8 @@ const EditTodo = ({
                     ></input>
                 </div>
                 <div id="editControlButtons">
-                    <input type="submit" value="submit edit"></input>
-                    <button onClick={handleDeleteTodo}>delete</button>
+                    <input type="submit" value="SUBMIT EDIT"></input>
+                    <button onClick={handleDeleteTodo}>DELETE TODO</button>
                     <button onClick={() => setEditMode(false)}>QUIT</button>
                 </div>
             </form>

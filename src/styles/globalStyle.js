@@ -14,14 +14,34 @@ body {
   justify-content: center;
 }
 
+.finishedTask{
+    text-decoration: line-through;
+}
+
+#addTodoForm{
+    background: #0000007a;
+    color: white;
+    padding: 20px;
+}
+label {
+    padding: 0 10px;
+}
+
+ul{
+    background: #ffffffad;
+    padding: 20px;
+    margin: 0;
+
+    
+   
+}
+
 #editForm {
   display: flex;
   flex-direction: column;
 
   
-      label {
-          padding: 0 10px;
-      }
+
 
       .labelInputBox {
           padding: 20px 0;
@@ -31,7 +51,11 @@ body {
       #editControlButtons {
           display: flex;
           margin-top: 10px;
+          flex-direction: column;
+         
           * {
+            
+
               background: white;
               border: none;
               box-shadow: 0.1rem 0.3rem 3.5rem rgb(0 0 0 / 7%);

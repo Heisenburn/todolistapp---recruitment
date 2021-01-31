@@ -25,20 +25,12 @@ function App() {
         response
             .then((result) => {
                 if (!result.message) {
-                    //only if records exists
-
-                    let filteredResults = result.data.map((item) => {
-                        //removing candidate element
-                        const { candidate: removedKey, ...rest } = item;
-                        return rest;
-                    });
-
-                    setTodos(filteredResults);
-
+                    setTodos(result.data);
                     setCommunicatingWithServer(false);
                 } else {
+                    //zero todos in dB
                     setCommunicatingWithServer(false);
-                    setTodos([])
+                    setTodos([]);
                 }
             })
             .catch((err) => console.log(err));

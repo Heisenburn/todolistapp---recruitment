@@ -23,6 +23,7 @@ const ShowTodoList = ({
 
     if (todos.length) {
         return (
+            //TODO: DRY
             <ul>
                 {todos.map((item, index) => {
                     if (showCompletedMode) {
@@ -31,9 +32,8 @@ const ShowTodoList = ({
                                 key={index}
                                 onClick={() => handleTodoElementClick(index)}
                             >
-                                <CheckedSVG key={index + 2} is_completed={item.is_completed}/>
-                                <p key={index + 1}>{item.task}</p>
-                                 
+                                <CheckedSVG key={index + 2} is_completed={item.is_completed} />
+                                <p className={item.is_completed ? 'finishedTask' : ''} key={index + 1}>{item.task}</p>
                             </StyledTodoElement>
                         );
                     } else if (!showCompletedMode && !item.is_completed) {

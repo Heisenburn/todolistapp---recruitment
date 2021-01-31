@@ -18,7 +18,7 @@ const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, 
     };
 
     return (
-        <form onSubmit={handleAddTodo}>
+        <form id="addTodoForm" onSubmit={handleAddTodo}>
             <label htmlFor="addNewTodoInput">Add new element</label>
             <input
                 id="addNewTodoInput"
