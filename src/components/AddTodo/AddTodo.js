@@ -1,20 +1,19 @@
 import { sendToServer } from '../../apiFunctions/send';
 
-const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, setCommunicatingWithServer }) => {
+const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, setUpdating }) => {
     const handleAddTodo = (event) => {
         event.preventDefault();
-        
-        setCommunicatingWithServer(true)
+
+        setUpdating(true);
         let tempAddObject = {
             is_completed: 0,
             task: controlledInputValues.addNewTodoInputValue,
         };
 
         controlledInputValues.addNewTodoInputValue.length && //validating form
-        setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
-        sendToServer(tempAddObject.task, 0, setCommunicatingWithServer);
+            setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
+        sendToServer(tempAddObject.task, 0, setUpdating);
         setAddMode(false);
-       
     };
 
     return (

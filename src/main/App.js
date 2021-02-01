@@ -17,35 +17,27 @@ function App() {
         editTodoInputValue: '',
     });
     const [addMode, setAddMode] = useState(false);
-    const [isCommunicatingWithServer, setCommunicatingWithServer] = useState(false);
-    const [intialLoading, setInitialLoading] = useState(true);
+    const [gettingTodos, setGettingTodos] = useState(false);
+    const [updating, setUpdating] = useState(false);
+
     useEffect(() => {
-        if (!isCommunicatingWithServer) {
-            const response = makeFetchRequest(setCommunicatingWithServer); //get todos at a startup
+        if (!updating) {
+            setGettingTodos(true)
+            console.log('pobieram z serwera')
+            const response = makeFetchRequest(setGettingTodos); //get todos at a startup
             response
                 .then((result) => {
-                    if (!result.message) {
-                        setTodos(result.data);
-                    } else {
-                        //zero todos in dB
-                        setTodos([]);
-                    }
+                    !result.message && setTodos(result.data) 
                 })
                 .catch((err) => console.log(err));
         }
-    }, [isCommunicatingWithServer]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setInitialLoading(false);
-        }, 1000);
-    }, []);
+    }, [updating])
 
     const Loading = () => {
         return <ReactLoading type={'spin'} color={'black'} height={'100%'} width={'100%'} />;
     };
 
-    if (!isCommunicatingWithServer && !intialLoading) {
+    if (!updating && !gettingTodos) {
         return (
             <StyledContainer>
                 {!editMode && <h4>Click on element to edit it</h4>}
@@ -57,7 +49,7 @@ function App() {
                 />
                 {!editMode && addMode && (
                     <AddTodo
-                        setCommunicatingWithServer={setCommunicatingWithServer}
+                        setUpdating={setUpdating}
                         controlledInputValues={controlledInputValues}
                         setControlledInputValues={setControlledInputValues}
                         setAddMode={setAddMode}
@@ -72,7 +64,7 @@ function App() {
                         controlledInputValues={controlledInputValues}
                         setControlledInputValues={setControlledInputValues}
                         setEditMode={setEditMode}
-                        setCommunicatingWithServer={setCommunicatingWithServer}
+                        setUpdating={setUpdating}
                     />
                 )}
 
@@ -85,7 +77,7 @@ function App() {
                         todos={todos}
                         controlledInputValues={controlledInputValues}
                         setShowCompletedMode={setShowCompletedMode}
-                        isCommunicatingWithServer={isCommunicatingWithServer}
+                        updating={updating}
                     />
                 )}
             </StyledContainer>

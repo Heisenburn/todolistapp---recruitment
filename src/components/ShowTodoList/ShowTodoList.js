@@ -8,7 +8,7 @@ const ShowTodoList = ({
     setElementCurrentlyBeingEdited,
     todos,
     controlledInputValues,
-    isCommunicatingWithServer,
+    updating,
 }) => {
     const handleTodoElementClick = (index) => {
         setEditMode(true);
@@ -52,7 +52,7 @@ const ShowTodoList = ({
             </ul>
         );
     } else {
-        return !isCommunicatingWithServer ? <p>Add first element...</p> : <p>Loading...</p>;
+        return !updating ? <p>Add first element...</p> : <p>Loading...</p>;
     }
 };
 

@@ -7,52 +7,42 @@ const EditTodo = ({
     controlledInputValues,
     setControlledInputValues,
     setEditMode,
-    setCommunicatingWithServer,
+    setUpdating,
 }) => {
     const handleEditTodo = (newValue) => {
         if (newValue !== todos[elementCurrentlyBeingEdited].task) {
-            setCommunicatingWithServer(true);
+            setUpdating(true);
             let tempArray = [...todos]; //m.in. kopia referencji - zmienia też na oryginalnej
             tempArray[elementCurrentlyBeingEdited].task = newValue;
             updateTodoOnServer(
                 newValue,
                 todos[elementCurrentlyBeingEdited].id,
                 todos[elementCurrentlyBeingEdited].is_completed,
-                setCommunicatingWithServer,
+                setUpdating,
             );
         }
     };
 
     const handleClickCheckbox = () => {
         let tempArray = [...todos];
-        setCommunicatingWithServer(true);
+        setUpdating(true);
 
-        if (tempArray[elementCurrentlyBeingEdited].is_completed === 0) {
-            tempArray[elementCurrentlyBeingEdited].is_completed = 1;
-            updateTodoOnServer(
-                todos[elementCurrentlyBeingEdited].task,
-                todos[elementCurrentlyBeingEdited].id,
-                1,
-                setCommunicatingWithServer,
-            );
-        } else {
-            tempArray[elementCurrentlyBeingEdited].is_completed = 0;
-            updateTodoOnServer(
-                todos[elementCurrentlyBeingEdited].task,
-                todos[elementCurrentlyBeingEdited].id,
-                0,
-                setCommunicatingWithServer,
-            );
-        }
+        updateTodoOnServer(
+           todos[elementCurrentlyBeingEdited].task,
+           todos[elementCurrentlyBeingEdited].id,
+           !tempArray[elementCurrentlyBeingEdited].is_completed,
+           setUpdating,
+        );
         setEditMode(false);
     };
 
     const handleDeleteTodo = (event) => {
         event.preventDefault();
-        setCommunicatingWithServer(true);
+        setUpdating(true);
+        console.log('zaczynam kasowac')
         deleteOnServer(
             todos[elementCurrentlyBeingEdited].id,
-            setCommunicatingWithServer,
+            setUpdating,
             setEditMode,
         );
     };

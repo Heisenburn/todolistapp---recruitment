@@ -1,8 +1,9 @@
-export const makeFetchRequest = (setCommunicatingWithServer = () => {}) => {
+export const makeFetchRequest = (setGettingTodos = () => {}) => {
     const fetchRequest = fetch('https://react.massivepixel.io/api/rudnik.marcin/')
         .then((response) => response.json())
         .then((json) => {
-            setCommunicatingWithServer(false);
+            console.log('koniec pobierania');
+            setGettingTodos(false);
             return json;
         })
         .catch((error) => console.log('Error:: ' + error.message));

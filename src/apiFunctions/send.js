@@ -1,7 +1,7 @@
 export const sendToServer = (
     task,
     is_completed = 0,
-    setCommunicatingWithServer = () => {},
+    setUpdating = () => {},
 ) => {
     const customFormData = new FormData();
     customFormData.append('task', task);
@@ -13,7 +13,7 @@ export const sendToServer = (
     })
         .then((response) => response.json())
         .then((json) => {
-            setCommunicatingWithServer(false);
+            setUpdating(false);
             console.log(json);
         })
         .catch((error) => console.log('Error:: ' + error.message));
@@ -25,7 +25,7 @@ export const updateTodoOnServer = (
     task,
     id,
     is_completed = 0,
-    setCommunicatingWithServer = () => {},
+    setUpdating = () => {},
 ) => {
     const customFormData = new FormData();
     customFormData.append('task', `${task}`);
@@ -38,7 +38,7 @@ export const updateTodoOnServer = (
     })
         .then((response) => response.json())
         .then((json) => {
-            setCommunicatingWithServer(false);
+            setUpdating(false);
             console.log(json);
         })
         .catch((error) => console.log('Error:: ' + error.message));
@@ -46,7 +46,7 @@ export const updateTodoOnServer = (
 
 export const deleteOnServer = (
     id,
-    setCommunicatingWithServer = () => {},
+    setUpdating = () => {},
     setEditMode = () => {},
 ) => {
     fetch(`https://react.massivepixel.io/api/rudnik.marcin/${id}`, {
@@ -54,8 +54,9 @@ export const deleteOnServer = (
     })
         .then((response) => response.json())
         .then((json) => {
-            setCommunicatingWithServer(false);
+            setUpdating(false);
             setEditMode(false);
+             console.log('kasowanie skonczone')
             console.log(json);
         })
         .catch((error) => console.log('Error:: ' + error.message));
