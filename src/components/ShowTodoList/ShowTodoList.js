@@ -22,33 +22,30 @@ const ShowTodoList = ({
     };
 
     if (todos.length) {
+               
         return (
-            //TODO: DRY
             <ul>
-                {todos.map((item, index) => {
-                    if (showCompletedMode) {
-                        return (
-                            <StyledTodoElement
-                                key={index}
-                                onClick={() => handleTodoElementClick(index)}
-                            >
-                                <CheckedSVG key={index + 2} is_completed={item.is_completed} />
-                                <p className={item.is_completed ? 'finishedTask' : ''} key={index + 1}>{item.task}</p>
-                            </StyledTodoElement>
-                        );
-                    } else if (!showCompletedMode && !item.is_completed) {
-                        return (
-                            <StyledTodoElement
-                                key={index}
-                                onClick={() => handleTodoElementClick(index)}
-                            >
-                                <CheckedSVG key={index + 2} is_completed={item.is_completed} />
-                                <p key={index + 1}>{item.task}</p>
-                            </StyledTodoElement>
-                        );
-                    }
-                    return null;
-                })}
+                {todos.map((item, index) =>
+                    showCompletedMode ? (
+                        <StyledTodoElement
+                            key={index}
+                            onClick={() => handleTodoElementClick(index)}
+                        >
+                            <CheckedSVG key={index + 2} is_completed={item.is_completed} />
+                            <p className={item.is_completed ? 'finishedTask' : ''} key={index + 1}>
+                                {item.task}
+                            </p>
+                        </StyledTodoElement>
+                    ) : !item.is_completed ? (
+                        <StyledTodoElement
+                            key={index}
+                            onClick={() => handleTodoElementClick(index)}
+                        >
+                            <CheckedSVG key={index + 2} is_completed={false} />
+                            <p key={index + 1}>{item.task}</p>
+                        </StyledTodoElement>
+                    ) : null,
+                )}
             </ul>
         );
     } else {

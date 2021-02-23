@@ -1,4 +1,5 @@
-import { sendToServer } from '../../apiFunctions/send';
+import ApiCommunication from '../../apiFunctions/ApiCommunication';
+const db = new ApiCommunication()
 
 const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, setUpdating }) => {
     const handleAddTodo = (event) => {
@@ -12,7 +13,7 @@ const AddTodo = ({ controlledInputValues, setControlledInputValues, setAddMode, 
 
         controlledInputValues.addNewTodoInputValue.length && //validating form
             setControlledInputValues({ ...controlledInputValues, addNewTodoInputValue: '' });
-        sendToServer(tempAddObject.task, 0, setUpdating);
+        db.sendToServer(tempAddObject.task, 0, setUpdating);
         setAddMode(false);
     };
 

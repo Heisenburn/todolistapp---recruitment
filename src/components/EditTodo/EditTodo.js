@@ -1,5 +1,5 @@
-import { updateTodoOnServer } from '../../apiFunctions/send';
-import { deleteOnServer } from '../../apiFunctions/send';
+import ApiCommunication from '../../apiFunctions/ApiCommunication';
+const db = new ApiCommunication()
 
 const EditTodo = ({
     todos,
@@ -14,7 +14,7 @@ const EditTodo = ({
             setUpdating(true);
             let tempArray = [...todos]; //m.in. kopia referencji - zmienia też na oryginalnej
             tempArray[elementCurrentlyBeingEdited].task = newValue;
-            updateTodoOnServer(
+            db.updateTodoOnServer(
                 newValue,
                 todos[elementCurrentlyBeingEdited].id,
                 todos[elementCurrentlyBeingEdited].is_completed,
@@ -27,7 +27,7 @@ const EditTodo = ({
         let tempArray = [...todos];
         setUpdating(true);
 
-        updateTodoOnServer(
+        db.updateTodoOnServer(
            todos[elementCurrentlyBeingEdited].task,
            todos[elementCurrentlyBeingEdited].id,
            !tempArray[elementCurrentlyBeingEdited].is_completed,
@@ -40,7 +40,7 @@ const EditTodo = ({
         event.preventDefault();
         setUpdating(true);
         console.log('zaczynam kasowac')
-        deleteOnServer(
+        db.deleteOnServer(
             todos[elementCurrentlyBeingEdited].id,
             setUpdating,
             setEditMode,

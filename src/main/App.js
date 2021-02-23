@@ -3,9 +3,13 @@ import AddTodo from '../components/AddTodo/AddTodo';
 import EditTodo from '../components/EditTodo/EditTodo';
 import ShowTodoList from '../components/ShowTodoList/ShowTodoList';
 import { StyledContainer } from '../styles/styled';
-import { makeFetchRequest } from '../apiFunctions/get';
+
+
 import ReactLoading from 'react-loading';
 import Header from '../components/Header/Header';
+
+import ApiCommunication from '../apiFunctions/ApiCommunication';
+const db = new ApiCommunication()
 
 function App() {
     const [todos, setTodos] = useState([]);
@@ -24,7 +28,7 @@ function App() {
         if (!updating) {
             setGettingTodos(true)
             console.log('pobieram z serwera')
-            const response = makeFetchRequest(setGettingTodos); //get todos at a startup
+            const response = db.getTodos(setGettingTodos); //get todos at a startup
             response
                 .then((result) => {
                     !result.message && setTodos(result.data) 
